@@ -19,23 +19,43 @@
           </a>
         </header>
         <div class="card-content">
-          <div class="content">
+          <div class="content" id="quote_content">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-            <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
-            <br>
-            <small>11:09 PM - 1 Jan 2016</small>
           </div>
         </div>
         <footer class="card-footer">
-          <a class="card-footer-item">New Quote</a>
+          <a id="new_quote" class="card-footer-item">New Quote</a>
         </footer>
       </div>
     </div>
 
     <script
-      src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-      integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
       crossorigin="anonymous"></script>
 
+    <script>
+      let quotes;
+      let start = 0;
+
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/api/quotes',
+        dataType: 'json',
+        success: (quote) => {
+          quotes = quote
+          console.log(quotes);
+        }
+      })
+
+      $('#new_quote').click(() => {
+        if(start === quotes.length) {
+          start = 0
+        }
+        $('#quote_content').html(quotes[start].quote)
+        start++
+      })
+
+    </script>
   </body>
 </html>
